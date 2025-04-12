@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
 
-// Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
 namespace EsepWebhook;
@@ -18,6 +17,7 @@ public class Function
         
         string payload = $"{{\"text\":\"Issue Created: {json.issue.html_url}\"}}";
         
+        // Make sure there are NO SPACES in this URL
         string webhookUrl = Environment.GetEnvironmentVariable("SLACK_URL");
         
         var httpRequest = new HttpRequestMessage(HttpMethod.Post, webhookUrl)
